@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title>Recomendação de Cursos - MentorAI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<!-- Se ainda não tiver o fragment navbar, COMENTA ESSA LINHA pra não quebrar -->
+<!-- <div th:replace="~{fragments/navbar :: navbar}"></div> -->
+
+<div class="container mx-auto px-4 py-10">
+
+    <h1 class="text-3xl font-bold mb-6 text-center">
+        Recomendações de Cursos com IA
+    </h1>
+
+    <!-- Card do formulário -->
+    <div class="max-w-3xl mx-auto card bg-base-100 shadow-xl mb-8">
+        <div class="card-body">
+            <h2 class="card-title">Conte seus objetivos</h2>
+            <p class="text-sm opacity-70">
+                Descreva seus objetivos de carreira, conhecimentos atuais ou área de interesse.
+            </p>
+
+            <form th:action="@{/ai/recommend}"
+                  th:object="${request}"
+                  method="post"
+                  class="space-y-4 mt-4">
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Sua mensagem</span>
+                    </label>
+                    <textarea th:field="*{message}"
+                              class="textarea textarea-bordered w-full h-32"
+                              placeholder="Ex: Quero migrar para a área de dados, já sei um pouco de Python.">
+                    </textarea>
+                </div>
+
+                <div class="card-actions justify-end">
+                    <button type="submit" class="btn btn-primary">
+                        Pedir recomendação
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="max-w-3xl mx-auto"
+         th:if="${request != null and request.recommendations != null}">
+
+        <h2 class="text-2xl font-semibold mb-4">
+            Recomendações da MentorAI
+        </h2>
+
+        <div th:if="${#lists.isEmpty(request.recommendations)}" class="alert alert-info">
+            <span>Nenhuma recomendação ainda. Envie uma mensagem acima 😊</span>
+        </div>
+
+        <div class="space-y-4" th:if="${!#lists.isEmpty(request.recommendations)}">
+            <div class="card bg-base-100 shadow-md"
+                 th:each="rec : ${request.recommendations}">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${rec.title}">Título do curso</h3>
+                    <p class="text-sm whitespace-pre-wrap mt-2"
+                       th:text="${rec.reason}">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
