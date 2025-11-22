@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrículas - MentorAI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mx-auto px-4 pb-10">
+
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold mb-1">Matrículas</h1>
+            <p class="text-sm opacity-70">
+                Aqui você acompanha quais usuários estão matriculados em quais cursos.
+            </p>
+        </div>
+
+        <a th:href="@{/enrollments/new}" class="btn btn-primary">
+            + Nova Matrícula
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table table-zebra bg-base-100 shadow-lg rounded-box">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário</th>
+                <th>Curso</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="enrollment : ${enrollments}">
+                <td th:text="${enrollment.id}"></td>
+                <td th:text="${enrollment.user != null ? enrollment.user.name : '—'}"></td>
+                <td th:text="${enrollment.course != null ? enrollment.course.title : '—'}"></td>
+                <td>
+                    <span class="badge badge-outline"
+                          th:text="${enrollment.status != null ? enrollment.status : 'PENDENTE'}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(enrollments)}">
+                <td colspan="4" class="text-center py-6 text-sm opacity-70">
+                    Nenhuma matrícula cadastrada ainda.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

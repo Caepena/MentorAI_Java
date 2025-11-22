@@ -2,12 +2,15 @@ package br.com.fiap.mentorai.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "MENTORAI_USER")
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -28,4 +31,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Enrollment> enrollments;
+
+    public User(OAuth2User principal, String email) {
+        this.name = principal.getAttributes().get("name").toString();
+        this.email = email;
+        this.password = java.util.UUID.randomUUID().toString();
+    }
 }

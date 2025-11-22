@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title>MentorAI - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mx-auto px-4 pb-10">
+    <div class="grid gap-6 md:grid-cols-3 mb-8">
+        <div class="card bg-base-100 shadow-xl md:col-span-2">
+            <div class="card-body">
+                <h2 class="card-title">Bem-vindo ao MentorAI</h2>
+                <p class="text-sm opacity-70">
+                    Plataforma para apoiar profissionais na requalificação e no upskilling, com foco em habilidades do futuro.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <a th:href="@{/skills}" class="btn btn-outline btn-primary btn-sm">
+                        Gerenciar Skills
+                    </a>
+                    <a th:href="@{/courses}" class="btn btn-outline btn-secondary btn-sm">
+                        Gerenciar Cursos
+                    </a>
+                    <a th:href="@{/enrollments}" class="btn btn-outline btn-accent btn-sm">
+                        Ver Matrículas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title">Autenticação</h2>
+                <p class="text-sm opacity-70 mb-3">
+                    Acesse com sua conta GitHub para salvar seu progresso e preferências.
+                </p>
+                <a th:href="@{/login}" class="btn btn-neutral w-full">
+                    Login com GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-3">
+        <div class="card bg-base-100 shadow-md">
+            <div class="card-body">
+                <h3 class="card-title text-lg">Mapa de Skills</h3>
+                <p class="text-sm opacity-70">
+                    Cadastre skills técnicas e comportamentais que compõem os perfis profissionais alvo.
+                </p>
+            </div>
+        </div>
+        <div class="card bg-base-100 shadow-md">
+            <div class="card-body">
+                <h3 class="card-title text-lg">Trilhas de Cursos</h3>
+                <p class="text-sm opacity-70">
+                    Monte trilhas combinando cursos e habilidades alinhados às demandas do mercado.
+                </p>
+            </div>
+        </div>
+        <div class="card bg-base-100 shadow-md">
+            <div class="card-body">
+                <h3 class="card-title text-lg">Acompanhamento</h3>
+                <p class="text-sm opacity-70">
+                    Use matrículas e progresso para acompanhar o desenvolvimento dos usuários.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos - MentorAI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mx-auto px-4 pb-10">
+
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold mb-1">Cursos disponíveis</h1>
+            <p class="text-sm opacity-70">
+                Trilhas de aprendizado recomendadas para requalificação profissional.
+            </p>
+        </div>
+        <a th:href="@{/courses/new}" class="btn btn-primary">
+            + Novo Curso
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table table-zebra bg-base-100 shadow-lg rounded-box">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Fornecedor</th>
+                <th>Carga Horária</th>
+                <th>Skills</th>
+                <th class="w-48 text-center">Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.id}"></td>
+                <td th:text="${course.title}"></td>
+                <td th:text="${course.provider}"></td>
+                <td th:text="${course.workloadHours != null ? course.workloadHours + 'h' : '-'}"></td>
+
+                <td>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="badge badge-outline"
+                              th:each="skill : ${course.skills}"
+                              th:text="${skill.name}">
+                        </span>
+
+                        <span th:if="${#lists.isEmpty(course.skills)}"
+                              class="badge badge-ghost text-xs">
+                            Sem skills vinculadas
+                        </span>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="flex gap-2 justify-center">
+                        <a th:href="@{'/courses/' + ${course.id} + '/edit'}"
+                           class="btn btn-sm btn-warning">
+                            Editar
+                        </a>
+
+                        <form th:action="@{'/courses/' + ${course.id} + '/delete'}"
+                              method="post">
+                            <button type="submit" class="btn btn-sm btn-error">
+                                Excluir
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(courses)}">
+                <td colspan="6" class="text-center py-6 text-sm opacity-70">
+                    Nenhum curso cadastrado ainda.
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

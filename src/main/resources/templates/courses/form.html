@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.id} != null ? 'Editar Curso - MentorAI' : 'Novo Curso - MentorAI'">Curso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mx-auto px-4 pb-10">
+    <div class="max-w-2xl mx-auto">
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title" th:text="${course.id} != null ? 'Editar Curso' : 'Novo Curso'"></h2>
+                <p class="text-sm opacity-70 mb-4">
+                    Cadastre cursos que serão recomendados aos usuários com base em suas skills.
+                </p>
+
+                <form th:action="@{/courses}" th:object="${course}" method="post" class="space-y-4">
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="form-control">
+                        <label class="label" for="title">
+                            <span class="label-text">Título do curso</span>
+                        </label>
+                        <input id="title" th:field="*{title}" type="text"
+                               placeholder="Ex: Formação Java Developer"
+                               class="input input-bordered w-full" required maxlength="200"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label" for="provider">
+                            <span class="label-text">Fornecedor / Plataforma</span>
+                        </label>
+                        <input id="provider" th:field="*{provider}" type="text"
+                               placeholder="FIAP, Alura, Coursera..."
+                               class="input input-bordered w-full" maxlength="150"/>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="form-control">
+                            <label class="label" for="workloadHours">
+                                <span class="label-text">Carga Horária (h)</span>
+                            </label>
+                            <input id="workloadHours" th:field="*{workloadHours}"
+                                   type="number" min="0"
+                                   class="input input-bordered w-full"/>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label" for="description">
+                            <span class="label-text">Descrição</span>
+                        </label>
+                        <textarea id="description" th:field="*{description}"
+                                  class="textarea textarea-bordered w-full"
+                                  rows="4" maxlength="1000"
+                                  placeholder="Explique brevemente o que o aluno irá aprender..."></textarea>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label" for="skillIds">
+                            <span class="label-text">Skills relacionadas</span>
+                            <span class="label-text-alt text-xs opacity-70">
+                                Segure CTRL (ou CMD) para selecionar múltiplas
+                            </span>
+                        </label>
+                        <select id="skillIds" name="skillIds" multiple
+                                class="select select-bordered w-full h-40">
+                            <option th:each="skill : ${skills}"
+                                    th:value="${skill.id}"
+                                    th:text="${skill.name}"
+                                    th:selected="${course.skills != null and course.skills.contains(skill)}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="card-actions justify-end mt-4">
+                        <a th:href="@{/courses}" class="btn btn-ghost">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

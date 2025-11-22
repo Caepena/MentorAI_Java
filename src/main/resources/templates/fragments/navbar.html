@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar bg-base-100 shadow mb-6">
+    <div class="flex-1">
+        <a th:href="@{/}" class="btn btn-ghost text-xl">MentorAI</a>
+    </div>
+    <div class="flex-none gap-2">
+        <a th:href="@{/skills}" class="btn btn-ghost">Skills</a>
+        <a th:href="@{/courses}" class="btn btn-ghost">Cursos</a>
+        <a th:href="@{/enrollments}" class="btn btn-ghost">Matrículas</a>
+        <a th:href="@{/profile}" class="btn btn-ghost">Perfil</a>
+    </div>
+</nav>
+</body>
+</html>

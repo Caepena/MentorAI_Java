@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Matrícula - MentorAI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet" />
+</head>
+<body class="bg-base-200 min-h-screen">
+
+<!-- Navbar compartilhada -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mx-auto px-4 py-10">
+
+    <div class="max-w-xl mx-auto bg-base-100 shadow-lg rounded-box p-8">
+
+        <h1 class="text-3xl font-bold mb-6 text-center">Nova Matrícula</h1>
+
+        <form th:action="@{/enrollments}" th:object="${enrollment}" method="post" class="space-y-4">
+
+            <!-- Usuário -->
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Selecionar Usuário</span>
+                </label>
+                <select class="select select-bordered w-full"
+                        th:field="*{user}">
+                    <option value="">-- escolha um usuário --</option>
+
+                    <option th:each="u : ${users}"
+                            th:value="${u.id}"
+                            th:text="${u.name}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Curso -->
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Selecionar Curso</span>
+                </label>
+                <select class="select select-bordered w-full"
+                        th:field="*{course}">
+                    <option value="">-- escolha um curso --</option>
+
+                    <option th:each="c : ${courses}"
+                            th:value="${c.id}"
+                            th:text="${c.title}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Status -->
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Status da Matrícula</span>
+                </label>
+
+                <select class="select select-bordered w-full"
+                        th:field="*{status}">
+                    <option value="ATIVA">ATIVA</option>
+                    <option value="CONCLUIDO">CONCLUÍDO</option>
+                    <option value="CANCELADO">CANCELADO</option>
+                    <option value="PENDENTE">PENDENTE</option>
+                </select>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex justify-between mt-6">
+                <a th:href="@{/enrollments}" class="btn btn-ghost">
+                    Voltar
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Salvar Matrícula
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

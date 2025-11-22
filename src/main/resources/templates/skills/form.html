@@ -1,34 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" data-theme="business">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${skill.id} != null ? 'Editar Skill' : 'Nova Skill'">Form Skill</title>
+    <title th:text="${skill.id} != null ? 'Editar Skill - MentorAI' : 'Nova Skill - MentorAI'">Skill</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="bg-base-200 min-h-screen">
 
-<h1 th:text="${skill.id} != null ? 'Editar Skill' : 'Nova Skill'"></h1>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<form th:action="@{/skills}" th:object="${skill}" method="post">
+<div class="container mx-auto px-4 pb-10">
+    <div class="max-w-xl mx-auto">
+        <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title" th:text="${skill.id} != null ? 'Editar Skill' : 'Nova Skill'"></h2>
+                <p class="text-sm opacity-70 mb-4">
+                    Defina as habilidades que serão usadas para compor os planos de requalificação.
+                </p>
 
-    <!-- Campo oculto para o ID na edição -->
-    <input type="hidden" th:field="*{id}"/>
+                <form th:action="@{/skills}" th:object="${skill}" method="post" class="space-y-4">
+                    <input type="hidden" th:field="*{id}"/>
 
-    <div>
-        <label for="name">Nome:</label>
-        <input id="name" th:field="*{name}" required maxlength="150"/>
+                    <div class="form-control">
+                        <label class="label" for="name">
+                            <span class="label-text">Nome da Skill</span>
+                        </label>
+                        <input id="name" th:field="*{name}" type="text"
+                               placeholder="Ex: Java, UX Design, Cloud Computing"
+                               class="input input-bordered w-full" required maxlength="150"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label" for="description">
+                            <span class="label-text">Descrição</span>
+                        </label>
+                        <textarea id="description" th:field="*{description}"
+                                  class="textarea textarea-bordered w-full"
+                                  rows="4" maxlength="500"
+                                  placeholder="Descreva brevemente a habilidade..."></textarea>
+                    </div>
+
+                    <div class="card-actions justify-end mt-4">
+                        <a th:href="@{/skills}" class="btn btn-ghost">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-
-    <div>
-        <label for="description">Descrição:</label><br>
-        <textarea id="description" th:field="*{description}" rows="4" cols="40"
-                  maxlength="500"></textarea>
-    </div>
-
-    <div>
-        <button type="submit">Salvar</button>
-        <a th:href="@{/skills}">Voltar</a>
-    </div>
-</form>
+</div>
 
 </body>
 </html>
